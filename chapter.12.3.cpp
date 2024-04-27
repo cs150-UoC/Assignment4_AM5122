@@ -59,8 +59,12 @@ class ImageData {
         string filepath = "C:\\Users\\steka\\Desktop\\CPP-PP-Edu-main\\Resources\\Code\\Programming-code\\Chapter12\\PPM Images\\" + ppmname;
         fstream fileppm(filepath);
         fileppm << "\n";
+        fileppm.seekg(-1,std::ios::cur);
         fileppm >> width >> height;
-        fileppm << "\n\n";
+        fileppm << "\n";
+        fileppm.seekg(-1,std::ios::cur);
+        fileppm << "\n";
+        fileppm.seekg(-1,std::ios::cur);
         vector<Pixel> newrow;
         int r,g,b;
         for(int i = 0; i<=height-1; i++) {
@@ -68,6 +72,7 @@ class ImageData {
             for(int j = 0; j<=width-1; j++) {
                 fileppm >> r >> g >> b;
                 fileppm << "\n";
+                fileppm.seekg(-1,std::ios::cur);
                 Image[i].push_back(Pixel(j,i,vec3(r,g,b)));
             }
         }
