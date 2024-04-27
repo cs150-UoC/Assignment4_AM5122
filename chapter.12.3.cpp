@@ -13,6 +13,10 @@
 #include "Simple_window.h"    // get access to our window library
 #include "Graph.h"            // get access to our graphics library facilities
 #include "vec3.h"
+#include <fstream>
+#include <sstream>
+#include "std_lib_facilities.h"
+#include <vector>
 //------------------------------------------------------------------------------
 
 class Pixel {
@@ -22,7 +26,7 @@ class Pixel {
 
     public:
 
-    Pixel(int Positionx,int Positiony,vec3 Color) {
+    Pixel(int Positionx,int Positiony,const vec3& Color) {
         positionx = Positionx;
         positiony = Positiony;
         color = Color;
@@ -51,7 +55,24 @@ class ImageData {
     int getwidth() {return width;}
     int getheight() {return height;}
 
-    
+    ImageData(string ppmname) {
+        string filepath = "C:\\Users\\steka\\Desktop\\CPP-PP-Edu-main\\Resources\\Code\\Programming-code\\Chapter12\\PPM Images\\" + ppmname;
+        fstream fileppm(filepath);
+        fileppm << "\n";
+        fileppm >> width >> height;
+        fileppm << "\n\n";
+        vector<Pixel> newrow;
+        int r,g,b;
+        for(int i = 0; i<=height-1; i++) {
+            Image.push_back(newrow);
+            for(int j = 0; j<=width-1; j++) {
+                fileppm >> r >> g >> b;
+                fileppm << "\n";
+                Image[i].push_back(Pixel(j,i,vec3(r,g,b)));
+            }
+        }
+        fileppm.close();
+    }
 };
 
 int main()
