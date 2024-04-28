@@ -65,9 +65,9 @@ class ImageData {
         fileppm.seekg(-1,std::ios::cur);
         fileppm << "\n";
         fileppm.seekg(-1,std::ios::cur);
-        vector<Pixel> newrow;
         int r,g,b;
         for(int i = 0; i<=height-1; i++) {
+            vector<Pixel> newrow;
             Image.push_back(newrow);
             for(int j = 0; j<=width-1; j++) {
                 fileppm >> r >> g >> b;
@@ -78,19 +78,28 @@ class ImageData {
         }
         fileppm.close();
     }
-}ppmimage;
+};
 
 int main()
 {
     using namespace Graph_lib;   // our graphics facilities are in Graph_lib
      
-    string ppmname = "simple.ppm";
-    ppmimage = ImageData(ppmname);
+    string ppmname = "world.ppm";
+    class ImageData ppmimage = ImageData(ppmname);
 
     Point tl(100,100);           // to become top left  corner of window
 
     Simple_window win(tl,ppmimage.getwidth() * 20 + 70,ppmimage.getheight() * 20,ppmname);    // make a simple window
 
+    vector<vector<Pixel>> Image = ppmimage.getImage();
+    for(int i = 0; i<=ppmimage.getheight() - 1; i++) {
+        for(int j = 0; j<=ppmimage.getwidth() - 1; j++) {
+            Fl_Color c = fl_rgb_color(Image[i][j].getcolor().x(),Image[i][j].getcolor().y(),Image[i][j].getcolor().z());
+            Rectangle r(Point(Image[i][j].getpositionx(),Image[i][j].getpositiony()),20,20);
+            r.set_fill_color(c);
+            win.attach(r);
+        }
+    }
     win.wait_for_button();       // give control to the display engine
 }
 
