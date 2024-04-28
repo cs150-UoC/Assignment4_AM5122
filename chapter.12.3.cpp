@@ -78,31 +78,18 @@ class ImageData {
         }
         fileppm.close();
     }
-};
+}ppmimage;
 
 int main()
 {
     using namespace Graph_lib;   // our graphics facilities are in Graph_lib
+     
+    string ppmname = "simple.ppm";
+    ppmimage = ImageData(ppmname);
 
     Point tl(100,100);           // to become top left  corner of window
 
-    Simple_window win(tl,600,400,"Canvas");    // make a simple window
-
-    Polygon poly;                // make a shape (a polygon)
-
-    poly.add(Point(300,200));    // add a point
-    poly.add(Point(350,100));    // add another point
-    poly.add(Point(400,200));    // add a third point 
-
-    poly.set_color(Color::red);  // adjust properties of poly
-
-    Text t(Point(150,50), "Hello World of HY150! ");
-    t.set_font(Graph_lib::Font::times_bold);
-    t.set_font_size(20);
-
-    win.attach(t);
-    
-    win.attach (poly);           // connect poly to the window
+    Simple_window win(tl,ppmimage.getwidth() * 20 + 70,ppmimage.getheight() * 20,ppmname);    // make a simple window
 
     win.wait_for_button();       // give control to the display engine
 }
